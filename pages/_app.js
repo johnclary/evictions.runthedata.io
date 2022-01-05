@@ -1,7 +1,14 @@
-import '../styles/globals.css'
+import { SWRConfig } from "swr";
+import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <SWRConfig
+      value={{ revalidateOnFocus: false}}
+    >
+      <Component {...pageProps} />
+    </SWRConfig>
+  );
 }
 
-export default MyApp
+export default MyApp;
