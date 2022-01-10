@@ -10,8 +10,8 @@ export default function PlaintiffDetailTable({ data }) {
       <thead>
         <tr>
           <th>Filed Date</th>
-          <th>Precinct</th>
           <th>Zipcode</th>
+          <th>Precinct</th>
           <th>Status</th>
         </tr>
       </thead>
