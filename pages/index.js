@@ -53,9 +53,23 @@ export default function Home() {
   return (
     <Container>
       <Nav />
-      <Row className="mt-4 mb-2">
+      <Row className="mt-4">
         <Col>
-          <h1 className="fw-bold">Travis County Evictions</h1>
+          <h1  className="fw-bold">Travis County Evictions</h1>
+        </Col>
+      </Row>
+      <Row className="mb-2 text-muted">
+        <Col>
+          <p>
+            Tracking evictions in Austin, TX from{" "}
+            <a
+              href="https://odysseypa.traviscountytx.gov/JPPublicAccess/default.aspx"
+              target="_blank"
+            >
+              public court records
+            </a>
+            .{" "}
+          </p>
         </Col>
       </Row>
       <DateFilter dates={dates} setDates={setDates} />
