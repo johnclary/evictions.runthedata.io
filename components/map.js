@@ -214,8 +214,8 @@ export default function Map({ data }) {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const zipTotals = useTotals(data);
-  const zipPolys = useGeoJSON("/data/travis_zips_simp.geo.json");
-  let zipCentroids = useGeoJSON("/data/centroids.geo.json");
+  const zipPolys = useGeoJSON("/data/zips.polys.geojson");
+  let zipCentroids = useGeoJSON("/data/zips.centroids.geojson");
   zipCentroids = useMergedGeojson(zipCentroids, zipTotals);
   const isMapLoaded = useMap(mapContainerRef, mapRef, zipPolys, zipCentroids);
 
