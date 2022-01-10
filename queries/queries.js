@@ -48,7 +48,7 @@ export const EVIC_BY_PLAINTIFF_QUERY = gql`
 export const PLAINTIFF_DETAIL_QUERY = gql`
   query PlaintiffDetail($name: String!) {
     cases(
-      where: { party_one: { _ilike: $name } }
+      where: { party_one: { _ilike: $name }, type: { _eq: "Eviction" } }
       order_by: { filed_date: desc }
     ) {
       _id
