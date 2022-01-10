@@ -35,49 +35,71 @@ export default function Home() {
     variables: name ? { name: decodeURIComponent(name) } : null,
   });
 
-  if (!data || data?.length === 0 || error || loading)
-    return <div>Loading or error...</div>;
+  if (loading)
+    return (
+      <Container>
+        <Row className="mt-5 text-center">
+          <Col>
+            <p>Loading...</p>
+          </Col>
+        </Row>
+      </Container>
+    );
 
   const info = getPlaintiffInfo(data?.cases || []);
   const stats = getStats(data?.cases || []);
   return (
     <Container>
       <Nav backButton />
-      <Row>
-        <Col>
-          <span><small>Landlord</small></span>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
+      {data?.cases?.length === 0 && (
+        <Row>
+          <Col>
+            <p>{`No data found for '${decodeURIComponent(name)}'`}</p>
+          </Col>
+        </Row>
+      )}
+      {data?.cases?.length > 0 && (
+        <>
           <Row>
             <Col>
-              <h2 className="fw-bold">{decodeURIComponent(name)}</h2>
+              <span>
+                <small>Landlord</small>
+              </span>
             </Col>
           </Row>
-          <Row className="mb-4">
+
+          <Row>
             <Col>
-              Doing business from{" "}
-              {`${info?.plaintiff_city}, ${info?.plaintiff_state} ${info?.plaintiff_zip}`}
+              <Row>
+                <Col>
+                  <h2 className="fw-bold">{decodeURIComponent(name)}</h2>
+                </Col>
+              </Row>
+              <Row className="mb-4">
+                <Col>
+                  Doing business from{" "}
+                  {`${info?.plaintiff_city}, ${info?.plaintiff_state} ${info?.plaintiff_zip}`}
+                </Col>
+              </Row>
             </Col>
           </Row>
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12} sm={8} md={6}>
-          <CasesByStatusChart data={stats} />
-        </Col>
-      </Row>
-      <Row className="pt-3">
-        <Col>
-          <h5 className="fw-bold">Evictions filed</h5>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <PlaintiffDetailTable data={data?.cases} />
-        </Col>
-      </Row>
+          <Row>
+            <Col xs={12} sm={8} md={6}>
+              <CasesByStatusChart data={stats} />
+            </Col>
+          </Row>
+          <Row className="pt-3">
+            <Col>
+              <h5 className="fw-bold">Evictions filed</h5>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <PlaintiffDetailTable data={data?.cases} />
+            </Col>
+          </Row>
+        </>
+      )}
     </Container>
   );
 }

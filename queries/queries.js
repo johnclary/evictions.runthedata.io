@@ -51,7 +51,7 @@ export const PLAINTIFF_DETAIL_QUERY = gql`
       where: { party_one: { _ilike: $name } }
       order_by: { filed_date: desc }
     ) {
-      case_number
+      _id
       created_at
       filed_date
       party_one

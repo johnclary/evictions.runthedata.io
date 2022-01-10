@@ -17,7 +17,7 @@ export default function PlaintiffDetailTable({ data }) {
       </thead>
       <tbody>
         {data.map((row) => (
-          <tr key={row.case_number}>
+          <tr key={row._id}>
             <td>{new Date(row.filed_date).toLocaleDateString()}</td>
             <td>{row.defendant_zip}</td>
             <td>{row.precinct}</td>

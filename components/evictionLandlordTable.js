@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { Table } from "react-bootstrap";
 
+const ROW_LIMIT = 50;
 
 export default function EvictLandlordTable({ data }) {
   if (!data || data?.length === 0) return <div>Loading...</div>;
-
   let totals = {};
-  data = data.forEach((row) => {
+  data.forEach((row) => {
     const p = row.party_one;
     totals[p] = totals[p] ? totals[p] : { name: p, count: 0 };
     totals[p].count += row.count;
@@ -20,6 +20,12 @@ export default function EvictLandlordTable({ data }) {
     if (a.count > b.count) return -1;
     return 1;
   });
+
+  let rowsNotRenderedCount = 0;
+  if (tableData.length > ROW_LIMIT) {
+    rowsNotRenderedCount = tableData.length - ROW_LIMIT;
+    tableData = tableData.slice(0, ROW_LIMIT);
+  }
 
   return (
     <Table size="sm">
@@ -40,6 +46,13 @@ export default function EvictLandlordTable({ data }) {
             <td>{row.count}</td>
           </tr>
         ))}
+        {rowsNotRenderedCount > 0 && (
+          <tr>
+            <td colSpan="2">
+              <small>{`${rowsNotRenderedCount} additional rows not displayed`}</small>
+            </td>
+          </tr>
+        )}
       </tbody>
     </Table>
   );
