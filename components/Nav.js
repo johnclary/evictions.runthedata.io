@@ -1,7 +1,22 @@
-import { useRef, useState, useEffect } from "react";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { Row, Col } from "react-bootstrap";
 
-export default function Nav() {
-  return <Row className="d-flex justify-content-end text-end"><div className="text-reset">About</div></Row>
+export default function Nav({ backButton }) {
+  const router = useRouter();
+  return (
+    <Row className="mb-3">
+      <div
+        className={`d-flex ${
+          backButton ? "justify-content-between" : "justify-content-end"
+        }`}
+      >
+        {backButton && (
+          <div className="text-reset" onClick={() => router.back()}>
+            <a href="#">{`< back`}</a>
+          </div>
+        )}
+        <div className="text-reset">about</div>
+      </div>
+    </Row>
+  );
 }

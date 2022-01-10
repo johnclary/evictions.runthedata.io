@@ -10,7 +10,6 @@ import {
 
 import { NUM_DAYS_MV_AVG, CHART_STROKE_COLOR } from "./settings";
 
-
 const moveAvg = (data, num_days) => {
   let i = 0;
   let sum = 0;
@@ -36,9 +35,11 @@ const CustomTooltip = ({ active, payload, label }) => {
     );
   }
   return null;
-}
+};
 
 export default function MovingAvgChart({ data }) {
+  if (!data || data?.length === 0) return <p><i><small>No data</small></i></p>;
+
   data.sort(function (a, b) {
     if (a.filed_date < b.filed_date) return -1;
     return 1;
@@ -67,11 +68,9 @@ export default function MovingAvgChart({ data }) {
           // interval={parseInt(data.length / 5)}
           type="number"
         />
-        <YAxis
-          domain={[0, 4]}
-        />
+        <YAxis domain={[0, 4]} />
         {/* <YAxis yAxisId="right" orientation="right" domain={[0, 40]} /> */}
-        <Tooltip content={<CustomTooltip/>}/>
+        <Tooltip content={<CustomTooltip />} />
         {/* <Bar yAxisId="right" dataKey="count" stroke="black" fill="black" /> */}
         <Line
           type="basis"
@@ -99,7 +98,7 @@ export default function MovingAvgChart({ data }) {
           stroke="#000"
           strokeDasharray="3 3"
         /> */}
-{/* 
+        {/* 
         <ReferenceLine
           x={new Date("2021-09-01").getTime()}
           label={

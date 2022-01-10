@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
-import { Row, Col, Modal, Button } from "react-bootstrap";
 import mapboxgl from "mapbox-gl";
-import { min as d3min, max as d3max } from "d3-array";
+import { max as d3max } from "d3-array";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { CHART_STROKE_COLOR } from "./settings.js";
 
@@ -24,11 +23,6 @@ export const MAP_OPTIONS_DEFAULT = {
 
 const addLayers = (map, zipPolys, zipCentroids) => {
   let hoveredStateId = null;
-
-  // const min = d3min(
-  //   zipCentroids.features,
-  //   (feature) => feature.properties.count
-  // );
 
   const max = d3max(
     zipCentroids.features,
@@ -179,7 +173,7 @@ const useGeoJSON = (url) => {
       .then((data) => {
         setGeojson(data);
       });
-  }, []);
+  }, [url]);
 
   return geojson;
 };
@@ -202,7 +196,7 @@ const useTotals = (data) => {
   return totals;
 };
 
-const usedMergedGeojson = (geojson, zipTotals) => {
+const useMergedGeojson = (geojson, zipTotals) => {
   const [merged, setMerged] = useState(null);
   useEffect(() => {
     if (!geojson || !zipTotals) return;
@@ -222,7 +216,7 @@ export default function Map({ data }) {
   const zipTotals = useTotals(data);
   const zipPolys = useGeoJSON("/data/travis_zips_simp.geo.json");
   let zipCentroids = useGeoJSON("/data/centroids.geo.json");
-  zipCentroids = usedMergedGeojson(zipCentroids, zipTotals);
+  zipCentroids = useMergedGeojson(zipCentroids, zipTotals);
   const isMapLoaded = useMap(mapContainerRef, mapRef, zipPolys, zipCentroids);
 
   return (

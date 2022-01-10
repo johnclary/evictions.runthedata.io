@@ -1,27 +1,39 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { format } from "date-fns";
 import Map from "../components/map";
 import { useGraphql } from "../components/utils/graphql";
 import Nav from "../components/Nav";
 import MovingAvgChart from "../components/movingAvgChart";
 import EvictLandlordTable from "../components/evictionLandlordTable";
+import DateFilter from "../components/dateFilter";
+import { DEFAULT_START_DATE } from "../components/settings";
 import {
   CASES_BY_EVIC_DATE_QUERY,
   EVIC_BY_ZIP_DAY_QUERY,
   EVIC_BY_PLAINTIFF_QUERY,
 } from "../queries/queries";
 
+const initializeDates = () => {
+  return { start: DEFAULT_START_DATE, end: format(new Date(), "yyyy-MM-dd") };
+};
+
 export default function Home() {
-  const [dateFilter, setDateFilter] = useState("2021-01-01");
-  const { data, error, loading } = useGraphql({
+  const [dates, setDates] = useState(initializeDates());
+  const {
+    data: dataCases,
+    error: errorCases,
+    loading: loadingCases,
+  } = useGraphql({
     query: CASES_BY_EVIC_DATE_QUERY,
+    variables: dates,
   });
 
   const {
     data: dataZips,
     error: errorZips,
     loading: loadingZips,
-  } = useGraphql({ query: EVIC_BY_ZIP_DAY_QUERY });
+  } = useGraphql({ query: EVIC_BY_ZIP_DAY_QUERY, variables: dates });
 
   const {
     data: dataPlaint,
@@ -29,31 +41,25 @@ export default function Home() {
     loading: loadingPlaint,
   } = useGraphql({
     query: EVIC_BY_PLAINTIFF_QUERY,
-    variables: { filed_date: "2020-05-01" },
+    variables: dates,
   });
 
-  if (!data || data?.length === 0 || error || loading)
-    return <div>Loading or error...</div>;
+  const data = {
+    cases: dataCases?.evic_by_date || [],
+    plaintiff: dataPlaint?.evict_by_plaintiff || [],
+    zips: dataZips?.evic_by_zip_day || [],
+  };
 
   return (
     <Container>
       <Nav />
-      <Row className="mt-4">
+      <Row className="mt-4 mb-2">
         <Col>
           <h1 className="fw-bold">Travis County Evictions</h1>
         </Col>
       </Row>
-      {/* <Row>
-        <Col>
-          <input
-            onChange={(e) => setDateFilter(e.target.value)}
-            type="date"
-            defaultValue={dateFilter}
-          />
-          <button>set date</button>
-        </Col>
-      </Row> */}
-      <Row>
+      <DateFilter dates={dates} setDates={setDates} />
+      <Row className="mt-4">
         <Col xs={12} md={6}>
           <Row>
             <Col>
@@ -62,33 +68,38 @@ export default function Home() {
           </Row>
           <Row>
             <Col style={{ minHeight: 450 }}>
-              <MovingAvgChart data={data["evic_by_date"]} />
+              {loadingCases && <p>Loading...</p>}
+              {!loadingCases && !errorCases && (
+                <MovingAvgChart data={data.cases} />
+              )}
             </Col>
           </Row>
         </Col>
         <Col>
           <Row>
             <Col>
-              <h5>Filings by zipcode</h5>
+              <h5>By zipcode</h5>
             </Col>
           </Row>
           <Row>
             <Col>
-              {dataZips?.evic_by_zip_day && (
-                <Map data={dataZips.evic_by_zip_day} />
-              )}
+              {loadingZips && <p>Loading...</p>}
+              {!loadingZips && !errorZips && <Map data={data.zips} />}
             </Col>
           </Row>
         </Col>
       </Row>
       <Row className="mt-4">
         <Col>
-          <h4>Evictions filed - last 12 months</h4>
+          <h4>By landlord</h4>
         </Col>
       </Row>
       <Row>
-        <Col xs={6}>
-          <EvictLandlordTable data={dataPlaint?.evict_by_plaintiff} />
+        <Col>
+          {loadingPlaint && <p>Loading...</p>}
+          {!loadingPlaint && !errorPlaint && (
+            <EvictLandlordTable data={data.plaintiff} />
+          )}
         </Col>
       </Row>
     </Container>

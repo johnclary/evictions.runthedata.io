@@ -1,8 +1,13 @@
 import { gql } from "graphql-request";
 
 export const CASES_BY_EVIC_DATE_QUERY = gql`
-  query CasesByEvicDate {
-    evic_by_date(where: { filed_date: { _gt: "2020-04-01" } }) {
+  query CasesByEvicDate($start: timestamp!, $end: timestamp!) {
+    evic_by_date(
+      where: {
+        filed_date: { _gte: $start }
+        _and: { filed_date: { _lte: $end } }
+      }
+    ) {
       count
       filed_date
       precinct
@@ -10,37 +15,14 @@ export const CASES_BY_EVIC_DATE_QUERY = gql`
   }
 `;
 
-// export const RECENT_FILINGS_QUERY = gql`
-//   query RecentFilings {
-//     cases(
-//       where: { type: { _eq: "Eviction" }, filed_date: { _gt: "2019-05-01" } }
-//       order_by: { filed_date: desc }
-//     ) {
-//       case_number
-//       filed_date
-//       party_one
-//     }
-//   }
-// `;
-
-// export const QUERY_PLAINTIFF_COUNT = gql`
-//   query PlaintiffByDate($filed_date: timestamp!, $party_name: String!) {
-//     cases_aggregate(
-//       where: {
-//         party_one: { _ilike: $party_name }
-//         _and: { filed_date: { _gte: $filed_date } }
-//       }
-//     ) {
-//       aggregate {
-//         count(columns: case_id)
-//       }
-//     }
-//   }
-// `;
-
 export const EVIC_BY_ZIP_DAY_QUERY = gql`
-  query EvicByZipDay {
-    evic_by_zip_day {
+  query EvicByZipDay($start: timestamp!, $end: timestamp!) {
+    evic_by_zip_day(
+      where: {
+        filed_date: { _gte: $start }
+        _and: { filed_date: { _lte: $end } }
+      }
+    ) {
       count
       defendant_zip
       filed_date
@@ -49,11 +31,38 @@ export const EVIC_BY_ZIP_DAY_QUERY = gql`
 `;
 
 export const EVIC_BY_PLAINTIFF_QUERY = gql`
-  query EvicByPlaintiff($filed_date: timestamp!) {
-    evict_by_plaintiff(where: { filed_date: { _gte: $filed_date } }) {
+  query EvicByPlaintiff($start: timestamp!, $end: timestamp!) {
+    evict_by_plaintiff(
+      where: {
+        filed_date: { _gte: $start }
+        _and: { filed_date: { _lte: $end } }
+      }
+    ) {
       count
       filed_date
       party_one
+    }
+  }
+`;
+
+export const PLAINTIFF_DETAIL_QUERY = gql`
+  query PlaintiffDetail($name: String!) {
+    cases(
+      where: { party_one: { _ilike: $name } }
+      order_by: { filed_date: desc }
+    ) {
+      case_number
+      created_at
+      filed_date
+      party_one
+      precinct
+      status
+      type
+      updated_at
+      defendant_zip
+      plaintiff_zip
+      plaintiff_city
+      plaintiff_state
     }
   }
 `;
