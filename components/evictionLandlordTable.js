@@ -39,7 +39,7 @@ export default function EvictLandlordTable({ data }) {
         {tableData.map((row) => (
           <tr key={row.name}>
             <td>
-              <Link href={`plaintiff/${encodeURIComponent(row.name)}`}>
+              <Link href={`plaintiff/${encodeURIComponent(row.name)}?fromHome=1`}>
                 {row.name}
               </Link>
             </td>

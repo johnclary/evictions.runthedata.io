@@ -4,7 +4,7 @@ import { useGraphql } from "../../components/utils/graphql";
 import PlaintiffDetailTable from "../../components/plaintiffDetailTable";
 import CasesByStatusChart from "../../components/casesByStatusChart";
 import Nav from "../../components/Nav";
-
+import Footer from "../../components/Footer";
 import { PLAINTIFF_DETAIL_QUERY } from "../../queries/queries";
 
 const getPlaintiffInfo = (data) => {
@@ -27,7 +27,7 @@ const getStats = (data) => {
   return stats;
 };
 
-export default function Home() {
+export default function PlaintiffDetails() {
   const router = useRouter();
   const name = router?.query?.name;
   const { data, error, loading } = useGraphql({
@@ -50,7 +50,7 @@ export default function Home() {
   const stats = getStats(data?.cases || []);
   return (
     <Container>
-      <Nav backButton />
+      <Nav />
       {data?.cases?.length === 0 && (
         <Row>
           <Col>
@@ -100,6 +100,7 @@ export default function Home() {
           </Row>
         </>
       )}
+      <Footer />
     </Container>
   );
 }

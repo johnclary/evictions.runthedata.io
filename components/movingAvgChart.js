@@ -24,21 +24,24 @@ const moveAvg = (data, num_days) => {
   return data;
 };
 
-const CustomTooltip = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="">
-        <p className="label">{`${new Date(label).toLocaleDateString()}`}</p>
-        <p className="label">{Math.round(payload[0].value * 10) / 10}</p>
-        {/* <p className="intro">{getIntroOfPage(label)}</p> */}
-      </div>
-    );
-  }
-  return null;
+const tooltipValueFormatter = (value, name, props) => [
+  "",
+  Math.round(value * 10) / 10,
+];
+
+const tooltipLabelFormatter = (d) => {
+  return new Date(d).toLocaleDateString();
 };
 
 export default function MovingAvgChart({ data }) {
-  if (!data || data?.length === 0) return <p><i><small>No data</small></i></p>;
+  if (!data || data?.length === 0)
+    return (
+      <p>
+        <i>
+          <small>No data</small>
+        </i>
+      </p>
+    );
 
   data.sort(function (a, b) {
     if (a.filed_date < b.filed_date) return -1;
@@ -65,13 +68,15 @@ export default function MovingAvgChart({ data }) {
             new Date(data[0].filed_date),
             new Date(data[data.length - 1].filed_date),
           ]}
-          // interval={parseInt(data.length / 5)}
           type="number"
         />
-        <YAxis domain={[0, 4]} />
-        {/* <YAxis yAxisId="right" orientation="right" domain={[0, 40]} /> */}
-        <Tooltip content={<CustomTooltip />} />
-        {/* <Bar yAxisId="right" dataKey="count" stroke="black" fill="black" /> */}
+        <YAxis domain={["auto", "auto"]} />
+        <Tooltip
+          formatter={tooltipValueFormatter}
+          labelFormatter={tooltipLabelFormatter}
+          separator=""
+        />
+
         <Line
           type="basis"
           dataKey="avg"
@@ -79,49 +84,6 @@ export default function MovingAvgChart({ data }) {
           strokeWidth="2"
           dot={false}
         />
-        {/* <ReferenceLine
-          label={
-            <Label
-              position="insideTopRight"
-              value="Another event of import"
-              fontSize={".7rem"}
-            />
-          }
-          x={new Date("2021-05-01").getTime()}
-          // label="Uno"
-          stroke="#000"
-          strokeDasharray="3 3"
-        /> */}
-        {/* <ReferenceLine
-          x={new Date("2021-06-01").getTime()}
-          label="5 months evict"
-          stroke="#000"
-          strokeDasharray="3 3"
-        /> */}
-        {/* 
-        <ReferenceLine
-          x={new Date("2021-09-01").getTime()}
-          label={
-            <Label
-              position="insideTopRight"
-              value="Count relief ends"
-              fontSize={".7rem"}
-            />
-          }
-          stroke="#000"
-          strokeDasharray="3 3"
-        /> */}
-        {/* 
-        <ReferenceLine
-          x={new Date("2021-12-06").getTime()}
-          label="County relief ends"
-          stroke="#000"
-          strokeDasharray="3 3"
-        /> */}
-        {/* <Bar dataKey="count" fill="red" /> */}
-        {/* <Bar dataKey="count" fill="blue" /> */}
-        {/* <Bar dataKey="count" fill="black" /> */}
-        {/* <Bar dataKey="count" fill="green" /> */}
       </ComposedChart>
     </ResponsiveContainer>
   );

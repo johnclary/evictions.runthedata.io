@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
-import { max as d3max } from "d3-array";
+import { max as d3Max } from "d3-array";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { CHART_STROKE_COLOR } from "./settings.js";
 
@@ -24,7 +24,7 @@ export const MAP_OPTIONS_DEFAULT = {
 const addLayers = (map, zipPolys, zipCentroids) => {
   let hoveredStateId = null;
 
-  const max = d3max(
+  const max = d3Max(
     zipCentroids.features,
     (feature) => feature.properties.count
   );
@@ -202,7 +202,7 @@ const useMergedGeojson = (geojson, zipTotals) => {
     if (!geojson || !zipTotals) return;
     geojson.features.forEach((feature) => {
       const zip = feature.properties.ZIPCODE;
-      const count = zipTotals[zip];
+      const count = zipTotals[zip] || 0;
       feature.properties.count = count;
     });
     setMerged(geojson);

@@ -1,21 +1,16 @@
-import { useRouter } from "next/router";
-import { Row, Col } from "react-bootstrap";
+import Link from "next/link";
+import { Row } from "react-bootstrap";
 
-export default function Nav({ backButton }) {
-  const router = useRouter();
+export default function Nav() {
   return (
-    <Row className="mb-3">
-      <div
-        className={`d-flex ${
-          backButton ? "justify-content-between" : "justify-content-end"
-        }`}
-      >
-        {backButton && (
-          <div className="text-reset" onClick={() => router.back()}>
-            <a href="#">{`< back`}</a>
-          </div>
-        )}
-        <div className="text-reset">about</div>
+    <Row className="my-3">
+      <div className="d-flex justify-content-end">
+        <div className="me-3">
+          <Link href="/">home</Link>
+        </div>
+        <div>
+          <Link href="/about">about</Link>
+        </div>
       </div>
     </Row>
   );
