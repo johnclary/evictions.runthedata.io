@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { Container, Row, Col } from "react-bootstrap";
 import { useGraphql } from "../../components/utils/graphql";
-import PlaintiffDetailTable from "../../components/plaintiffDetailTable";
+import PlaintiffDetailTable from "../../components/PlaintiffDetailTable";
 import CasesByStatusChart from "../../components/CasesByStatusChart";
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
