@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { format } from "date-fns";
 import { useGraphql } from "../components/utils/graphql";
-import DateFilter from "../components/dateFilter";
+import DateFilter from "../components/DateFilter";
 import EvictLandlordTable from "../components/EvictionLandlordTable";
 import Footer from "../components/Footer";
 import Map from "../components/Map";
