@@ -69,7 +69,9 @@ export default function Home() {
         <Col xs={12} md={6}>
           <Row>
             <Col>
-              <h5>Daily filings <small>(avg)</small></h5>
+              <h5>
+                Daily filings <small>(avg)</small>
+              </h5>
             </Col>
           </Row>
           <Row>
@@ -97,7 +99,7 @@ export default function Home() {
       </Row>
       <Row className="mt-4">
         <Col>
-          <h4>Cases by landlord</h4>
+          <h5>Cases by landlord</h5>
         </Col>
       </Row>
       <Row>
