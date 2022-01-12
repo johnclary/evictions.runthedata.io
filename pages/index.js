@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import Map from "../components/Map";
 import MovingAvgChart from "../components/MovingAvgChart";
 import Nav from "../components/Nav";
+import SiteHead from "../components/SiteHead";
 import {
   DEFAULT_START_DATE,
   STATUS_MAP,
@@ -117,84 +118,100 @@ export default function Home() {
   };
 
   return (
-    <Container>
-      <Nav />
-      <Row className="mt-4">
-        <Col>
-          <h3 className="fw-bold">Travis County Evictions</h3>
-        </Col>
-      </Row>
-      <Row className="mb-2 text-muted">
-        <Col>
-          <p>Tracking evictions in Austin, TX from public court records.</p>
-        </Col>
-      </Row>
-      <DateFilter dates={dates} setDates={setDates} />
-      <Row>
-        <Col xs={12} md={6} className="mt-4">
-          <Row>
-            <Col>
-              <h5>
-                Daily filings <small>(avg)</small>
-              </h5>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {loadingCases && <p>Loading...</p>}
-              {!loadingCases && !errorCases && (
-                <MovingAvgChart data={data.cases} startDate={dates.start}/>
-              )}
-            </Col>
-          </Row>
-        </Col>
-        <Col xs={12} md={6} className="mt-4">
-          <Row>
-            <Col>
-              <h5>Cases by status</h5>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {loadingStatus && <p>Loading...</p>}
-              {!loadingStatus && !errorStatus && (
-                <CasesByStatusChart data={groupStatuses(data.status)} />
-              )}
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12} md={6} className="mt-4">
-          <Row>
-            <Col>
-              <h5>Cases by landlord</h5>
-            </Col>
-          </Row>
-          <Row>
-            <Col style={{ height: 500, overflowX: "auto" }}>
-              {loadingPlaint && <p>Loading...</p>}
-              {!loadingPlaint && !errorPlaint && (
-                <EvictLandlordTable data={data.plaintiff} />
-              )}
-            </Col>
-          </Row>
-        </Col>
-        <Col>
-          <Row className="mt-4">
-            <Col>
-              <h5>Cases by zipcode</h5>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="p-2">
-              {loadingZips && <p>Loading...</p>}
-              {!loadingZips && !errorZips && <Map data={data.zips} />}
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <Footer />
-    </Container>
+    <>
+      <SiteHead />
+      <Container>
+        <Nav />
+        <Row className="mt-4">
+          <Col>
+            <h3 className="fw-bold">Travis County Evictions</h3>
+          </Col>
+        </Row>
+        <Row className="mb-2 text-muted">
+          <Col>
+            <p>Tracking evictions in Austin, TX from public court records.</p>
+          </Col>
+        </Row>
+        <DateFilter dates={dates} setDates={setDates} />
+        <Row>
+          <Col xs={12} md={6} className="mt-4">
+            <Row>
+              <Col>
+                <h5 className="mb-0">Daily filings</h5>
+                <p>
+                  <small>30-day rolling average</small>
+                </p>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {loadingCases && <p>Loading...</p>}
+                {!loadingCases && !errorCases && (
+                  <MovingAvgChart data={data.cases} startDate={dates.start} />
+                )}
+              </Col>
+            </Row>
+          </Col>
+          <Col xs={12} md={6} className="mt-4">
+            <Row style={{ marginBottom: "2rem" }}>
+              <Col>
+                <h5>Cases by status</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {loadingStatus && <p>Loading...</p>}
+                {!loadingStatus && !errorStatus && (
+                  <CasesByStatusChart data={groupStatuses(data.status)} />
+                )}
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6} className="mt-4">
+            <Row>
+              <Col>
+                <h5 className="mb-0">Cases by landlord</h5>
+                <p>
+                  <small>
+                    The names listed here are provided by the plaintiff in court
+                    filings. A single property manager/owner may file under
+                    multiple names.
+                  </small>
+                </p>
+              </Col>
+            </Row>
+            <Row>
+              <Col style={{ height: 500, overflowX: "auto" }}>
+                {loadingPlaint && <p>Loading...</p>}
+                {!loadingPlaint && !errorPlaint && (
+                  <EvictLandlordTable data={data.plaintiff} />
+                )}
+              </Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row className="mt-4">
+              <Col>
+                <h5 className="mb-0">Cases by zipcode</h5>
+                <p>
+                  <small>
+                    Zipcode data is only availble for after Jan 1 2020
+                  </small>
+                </p>
+              </Col>
+            </Row>
+            <Row>
+              <Col className="p-2">
+                {loadingZips && <p>Loading...</p>}
+                {!loadingZips && !errorZips && <Map data={data.zips} />}
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+        <Footer />
+      </Container>
+    </>
   );
 }
