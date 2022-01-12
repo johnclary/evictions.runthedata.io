@@ -6,9 +6,9 @@ export default function SiteHead() {
       <title key="title">Travis County Evictions Tracker @ runthedata.io</title>
         <meta name="description" content="Tracking evictions in Austin, TX from public court records"/>
         {/* <!-- Google / Search Engine Tags --> */}
-        <meta itemprop="name" content="Travis County Evictions Tracker @ runthedata.io"/>
-        <meta itemprop="description" content="Tracking evictions in Austin, TX from public court records"/>
-        <meta itemprop="image" content="http://evictions.runthedata.io/preview.png"/>
+        <meta itemProp="name" content="Travis County Evictions Tracker @ runthedata.io"/>
+        <meta itemProp="description" content="Tracking evictions in Austin, TX from public court records"/>
+        <meta itemProp="image" content="http://evictions.runthedata.io/preview.png"/>
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content="https://evictions.runthedata.io"/>
         <meta property="og:type" content="website"/>
