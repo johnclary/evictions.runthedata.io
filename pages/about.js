@@ -22,7 +22,7 @@ export default function About() {
               target="_blank"
               rel="noreferrer"
             >
-              public records
+              public records search
             </a>
             .
           </p>

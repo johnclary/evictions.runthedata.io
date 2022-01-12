@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
 import { max as d3Max } from "d3-array";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { CHART_STROKE_COLOR } from "./settings.js";
+import { CHART_STROKE_COLOR, CHART_MIN_HEIGHT } from "./settings.js";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA";
@@ -156,11 +156,13 @@ export const useMap = (mapContainerRef, mapRef, zipPolys, zipCentroids) => {
       "bottom-right"
     );
     mapRef.current.once("load").then(() => {
+      mapRef.current.addControl(new mapboxgl.FullscreenControl());
       setIsMapLoaded(true);
       addLayers(mapRef.current, zipPolys, zipCentroids);
     });
     return () => mapRef.current?.remove();
   }, [mapContainerRef, mapRef, zipPolys, zipCentroids]);
+  
   return isMapLoaded;
 };
 
@@ -221,7 +223,7 @@ export default function Map({ data }) {
 
   return (
     <div
-      style={{ minHeight: 450, height: "100%", width: "100%" }}
+      style={{ minHeight: 500, height: "100%", width: "100%" }}
       ref={mapContainerRef}
     ></div>
   );

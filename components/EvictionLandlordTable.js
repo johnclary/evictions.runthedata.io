@@ -28,7 +28,7 @@ export default function EvictLandlordTable({ data }) {
   }
 
   return (
-    <Table size="sm">
+    <Table size="sm" hover>
       <thead>
         <tr>
           <th>Landlord</th>

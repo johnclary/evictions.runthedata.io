@@ -10,7 +10,6 @@ export const CASES_BY_EVIC_DATE_QUERY = gql`
     ) {
       count
       filed_date
-      precinct
     }
   }
 `;
@@ -63,6 +62,16 @@ export const PLAINTIFF_DETAIL_QUERY = gql`
       plaintiff_zip
       plaintiff_city
       plaintiff_state
+    }
+  }
+`;
+
+export const EVIC_BY_STATUS_BY_DAY_QUERY = gql`
+  query EvicByStatusByDay($start: timestamp!, $end: timestamp!) {
+    evic_by_status_by_day(where: { filed_date: { _gte: $start, _lte: $end } }) {
+      count
+      filed_date
+      status
     }
   }
 `;

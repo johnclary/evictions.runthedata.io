@@ -7,11 +7,11 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { CHART_STROKE_COLOR, CHART_MIN_HEIGHT } from "./settings";
 
-import { CHART_STROKE_COLOR } from "./settings";
 const CasesByStatusChart = ({ data }) => {
   return (
-    <ResponsiveContainer width={"100%"} height={250}>
+    <ResponsiveContainer width="100%" height={CHART_MIN_HEIGHT}>
       <BarChart data={data} layout="horizontal">
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
