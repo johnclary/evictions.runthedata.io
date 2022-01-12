@@ -5,6 +5,7 @@ import PlaintiffDetailTable from "../../components/PlaintiffDetailTable";
 import CasesByStatusChart from "../../components/CasesByStatusChart";
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
+import SiteHead from "../../components/SiteHead";
 import { PLAINTIFF_DETAIL_QUERY } from "../../queries/queries";
 
 const getPlaintiffInfo = (data) => {
@@ -49,58 +50,61 @@ export default function PlaintiffDetails() {
   const info = getPlaintiffInfo(data?.cases || []);
   const stats = getStats(data?.cases || []);
   return (
-    <Container>
-      <Nav />
-      {data?.cases?.length === 0 && (
-        <Row>
-          <Col>
-            <p>{`No data found for '${decodeURIComponent(name)}'`}</p>
-          </Col>
-        </Row>
-      )}
-      {data?.cases?.length > 0 && (
-        <>
+    <>
+      <SiteHead />
+      <Container>
+        <Nav />
+        {data?.cases?.length === 0 && (
           <Row>
             <Col>
-              <span>
-                <small>Landlord</small>
-              </span>
+              <p>{`No data found for '${decodeURIComponent(name)}'`}</p>
             </Col>
           </Row>
+        )}
+        {data?.cases?.length > 0 && (
+          <>
+            <Row>
+              <Col>
+                <span>
+                  <small>Landlord</small>
+                </span>
+              </Col>
+            </Row>
 
-          <Row>
-            <Col>
-              <Row>
-                <Col>
-                  <h2 className="fw-bold">{decodeURIComponent(name)}</h2>
-                </Col>
-              </Row>
-              <Row className="mb-4">
-                <Col>
-                  Doing business from{" "}
-                  {`${info?.plaintiff_city}, ${info?.plaintiff_state} ${info?.plaintiff_zip}`}
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12} sm={8} md={6}>
-              <CasesByStatusChart data={stats} />
-            </Col>
-          </Row>
-          <Row className="pt-3">
-            <Col>
-              <h5 className="fw-bold">Evictions filed</h5>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <PlaintiffDetailTable data={data?.cases} />
-            </Col>
-          </Row>
-        </>
-      )}
-      <Footer />
-    </Container>
+            <Row>
+              <Col>
+                <Row>
+                  <Col>
+                    <h2 className="fw-bold">{decodeURIComponent(name)}</h2>
+                  </Col>
+                </Row>
+                <Row className="mb-4">
+                  <Col>
+                    Doing business from{" "}
+                    {`${info?.plaintiff_city}, ${info?.plaintiff_state} ${info?.plaintiff_zip}`}
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} sm={8} md={6}>
+                <CasesByStatusChart data={stats} />
+              </Col>
+            </Row>
+            <Row className="pt-3">
+              <Col>
+                <h5 className="fw-bold">Evictions filed</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <PlaintiffDetailTable data={data?.cases} />
+              </Col>
+            </Row>
+          </>
+        )}
+        <Footer />
+      </Container>
+    </>
   );
 }
