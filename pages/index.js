@@ -50,6 +50,25 @@ const groupStatuses = (data) => {
 };
 
 const offsetDates = (dates) => {
+  /*
+  Here's the challenge:
+    - we want to smooth out cases/day because it's fairly sporadic
+    - some days (weekends, mostly) have no cases
+    Our MovingAvgChart will take care of creating a moving avg of cases/day,
+    but we want the x domain of that chart to begin on start date provided
+    via user input. So we need to calculate the rolling average of the
+    start date, so we need fetch the previous <number days to avg> prior to
+    the start date. but, since our data is not continuous (there are missing days)
+    we don't know how many days before start date we need to fetch in order to
+    have enough records to calculate the initial avg for the starting date.
+    So the lazy way to do this is just multiply <number days to avg> times two
+    and hope we get enough data.
+    Good news—when we don't have enough data to calculate the moving avg of the
+    start date, the chart will render nothing for those dates. it's nbd.
+
+    all that to say we need to offset our query date *back in time* to try to 
+    grab the extra data that goes into our moving avg.
+  */
   let start = parse(dates.start, DATE_FORMAT, new Date());
   start = new Date(start.setDate(start.getDate() - NUM_DAYS_MV_AVG * 2));
   return { start: start, end: dates.end };
