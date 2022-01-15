@@ -4,7 +4,14 @@ import { Table } from "react-bootstrap";
 const ROW_LIMIT = 50;
 
 export default function EvictLandlordTable({ data }) {
-  if (!data || data?.length === 0) return <div>Loading...</div>;
+  if (!data || data?.length === 0)
+    return (
+      <p>
+        <i>
+          <small>No data</small>
+        </i>
+      </p>
+    );
   let totals = {};
   data.forEach((row) => {
     const p = row.party_one;

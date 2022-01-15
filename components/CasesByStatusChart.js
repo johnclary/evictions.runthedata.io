@@ -10,6 +10,15 @@ import {
 import { CHART_STROKE_COLOR, CHART_MIN_HEIGHT } from "./settings";
 
 const CasesByStatusChart = ({ data }) => {
+  if (!data || data.length === 0)
+    return (
+      <p>
+        <i>
+          <small>No data</small>
+        </i>
+      </p>
+    );
+
   return (
     <ResponsiveContainer width="100%" height={CHART_MIN_HEIGHT}>
       <BarChart data={data} layout="horizontal">
@@ -17,7 +26,12 @@ const CasesByStatusChart = ({ data }) => {
         <XAxis dataKey="name" />
         <YAxis dataKey="count" />
         <Tooltip />
-        <Bar maxBarSize={30} key={"name"} dataKey={"count"} fill={CHART_STROKE_COLOR} />
+        <Bar
+          maxBarSize={30}
+          key={"name"}
+          dataKey={"count"}
+          fill={CHART_STROKE_COLOR}
+        />
       </BarChart>
     </ResponsiveContainer>
   );

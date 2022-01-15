@@ -197,7 +197,7 @@ export default function Home() {
                 <h5 className="mb-0">Cases by zipcode</h5>
                 <p>
                   <small>
-                    Zipcode data is only availble for after Jan 1 2020
+                    Zipcode data is only availble after Jan 1 2020
                   </small>
                 </p>
               </Col>
