@@ -79,7 +79,7 @@ export default function MovingAvgChart({ data, startDate }) {
         </i>
       </p>
     );
-  console.log(chartData);
+
   return (
     <ResponsiveContainer width="100%" height={CHART_MIN_HEIGHT}>
       <LineChart data={chartData}>
