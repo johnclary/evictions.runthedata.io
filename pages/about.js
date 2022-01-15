@@ -10,7 +10,7 @@ const DOWNLOAD_URLS = {
 export default function About() {
   return (
     <Container>
-      <Nav />
+      <Nav/>
       <Row>
         <Col>
           <h1 className="fw-bold">About</h1>
