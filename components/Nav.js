@@ -9,7 +9,7 @@ export default function Nav() {
           <Link href="/">home</Link>
         </div>
         <div className="me-3">
-          <a href="https://runthedata.io" target="_blank" rel="noreferrer">
+          <a href="https://runthedata.io">
             policing
           </a>
         </div>
