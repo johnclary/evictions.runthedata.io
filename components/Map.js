@@ -22,6 +22,12 @@ export const MAP_OPTIONS_DEFAULT = {
 };
 
 const addLayers = (map, zipPolys, zipCentroids) => {
+  const findCentroid = (zipcode) => {
+    return zipCentroids.features.find(
+      (feature) => feature.properties.ZIPCODE == zipcode
+    );
+  };
+
   let hoveredStateId = null;
 
   const max = d3Max(
@@ -88,37 +94,27 @@ const addLayers = (map, zipPolys, zipCentroids) => {
     },
   });
 
-  map.addLayer({
-    id: "labels",
-    type: "symbol",
-    source: "zipPolys",
-    layout: {
-      "text-field": ["get", "ZIPCODE"],
-      "text-anchor": "center",
-      "text-radial-offset": 0.5,
-      "text-justify": "auto",
-    },
-    paint: {
-      "text-opacity": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        1,
-        0,
-      ],
-    },
-  });
-
   // When the user moves their mouse over the state-fill layer, we'll update the
   // feature state for the feature under the mouse.
-  map.on("mousemove", "zipsFill", (e) => {
+  map.on("click", "zipsFill", (e) => {
     if (e.features.length > 0) {
+      const feature = e.features[0];
+      const zip = feature.properties.ZIPCODE;
+      const centroid = findCentroid(zip);
+      const count = centroid?.properties.count;
+      const html = `<span><b>${zip}</b></span><br/><span>${count} filings</span>`;
+      const coordinates = centroid.geometry.coordinates.slice();
+
+      new mapboxgl.Popup().setLngLat(coordinates).setHTML(html).addTo(map);
+
       if (hoveredStateId !== null) {
+        // reset previous clicked feature
         map.setFeatureState(
           { source: "zipPolys", id: hoveredStateId },
           { hover: false }
         );
       }
-      hoveredStateId = e.features[0].id;
+      hoveredStateId = feature.id;
       map.setFeatureState(
         { source: "zipPolys", id: hoveredStateId },
         { hover: true }
@@ -162,7 +158,7 @@ export const useMap = (mapContainerRef, mapRef, zipPolys, zipCentroids) => {
     });
     return () => mapRef.current?.remove();
   }, [mapContainerRef, mapRef, zipPolys, zipCentroids]);
-  
+
   return isMapLoaded;
 };
 
