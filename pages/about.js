@@ -10,7 +10,7 @@ const DOWNLOAD_URLS = {
 export default function About() {
   return (
     <Container>
-      <Nav/>
+      <Nav />
       <Row>
         <Col>
           <h1 className="fw-bold">About</h1>
@@ -35,11 +35,45 @@ export default function About() {
           <p>
             The source code for this website is available{" "}
             <a
-              href="https://github.com/johnclary/evictions-app"
+              href="https://github.com/johnclary/evictions.runthedata.io"
               target="_blank"
               rel="noreferrer"
             >
               here
+            </a>
+            .
+          </p>
+          <h2 className="fw-bold">Get involved</h2>
+          <p>
+            Vote for{" "}
+            <a
+              href="https://www.hairstonforpeace.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Andrew Hairston for Justice of the Peace
+            </a>
+            .
+          </p>
+          <p>
+            Support{" "}
+            <a
+              href="https://www.bastaaustin.org/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Building and Strengthening Tenant Action (BASTA)
+            </a>
+            .
+          </p>
+          <p>
+            Join the{" "}
+            <a
+              href="https://www.austindsa.org/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Austin Democratic Socialists of America
             </a>
             .
           </p>
