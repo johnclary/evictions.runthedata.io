@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 
 export default function Footer(props) {
   return (
-    <Row>
+    <Row className="mt-4">
       <Col>
         <p className="text-center">
           Created by John Clary (

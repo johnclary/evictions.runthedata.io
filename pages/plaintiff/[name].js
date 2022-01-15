@@ -53,7 +53,7 @@ export default function PlaintiffDetails() {
     <>
       <SiteHead />
       <Container>
-        <Nav />
+        <Nav showHome />
         {data?.cases?.length === 0 && (
           <Row>
             <Col>
