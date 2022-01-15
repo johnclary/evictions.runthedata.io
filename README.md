@@ -1,34 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[evictions.runthedata.io](https://evictions.runthedata.io) is a website that tracks eviction filings in Travis County, TX.
 
-## Getting Started
+You can suggest an improvment or report a problem by [opening an issue](https://github.com/johnclary/evictions.runthedata.io/issues/new).
 
-First, run the development server:
+Code contributions are welcome! Read on to get the app running locally.
+
+## Get it running
+
+This is a [Next.js](https://nextjs.org/) app powered by a [Hasura](https://github.com/hasura/graphql-engine) graphql endpoint.
+
+The easiest way to get started is to connect a local copy of the app to our public eviction case API. See [here](https://github.com/johnclary/travis-county-courts-db) if you want to run the Postgres + Hasura API locally.
+
+
+1. Clone this repo and create a file called `.env.local` in root directory. This environment file needs a single environmental variable which points to the evictions API:
 
 ```bash
-npm run dev
-# or
-yarn dev
+# .env.local
+NEXT_PUBLIC_HASURA_GRAPHQL_ENDPOINT=http://api.runthedata.io/v1/graphql
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. [Install Node.js and NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), then run:
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```bash
+$ npm install    
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+3. Start the development server by running:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+$ npm run dev
+```
 
-## Learn More
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
