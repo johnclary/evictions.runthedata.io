@@ -51,9 +51,20 @@ export default function About() {
               target="_blank"
               rel="noreferrer"
             >
-              Andrew Hairston for Justice of the Peace
-            </a>
-            .
+              Andrew Hairston
+            </a>{" "}
+            for Justice of the Peace.
+          </p>
+          <p>
+            Vote for{" "}
+            <a
+              href="https://www.bobforcommish.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Bob Libal
+            </a>{" "}
+            for Travis County Commissioner .
           </p>
           <p>
             Support{" "}
