@@ -4,6 +4,9 @@ import useSWR from "swr";
 const HASURA_GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_HASURA_GRAPHQL_ENDPOINT;
 
 const fetcher = async (query, variables) => {
+  if (!query) {
+    return null;
+  }
   return await request(HASURA_GRAPHQL_ENDPOINT, query, variables);
 };
 
