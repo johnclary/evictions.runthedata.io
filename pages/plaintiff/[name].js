@@ -36,6 +36,8 @@ export default function PlaintiffDetails() {
     variables: name ? { name: decodeURIComponent(name) } : null,
   });
 
+  error && console.error(error);
+
   if (loading)
     return (
       <Container>
@@ -47,21 +49,23 @@ export default function PlaintiffDetails() {
       </Container>
     );
 
-  const info = getPlaintiffInfo(data?.cases || []);
-  const stats = getStats(data?.cases || []);
+  const cases = data?.cases_civil || [];
+  const info = getPlaintiffInfo(cases);
+  const stats = getStats(cases);
+
   return (
     <>
       <SiteHead />
       <Container>
         <Nav showHome />
-        {data?.cases?.length === 0 && (
+        {cases.length === 0 && (
           <Row>
             <Col>
               <p>{`No data found for '${decodeURIComponent(name)}'`}</p>
             </Col>
           </Row>
         )}
-        {data?.cases?.length > 0 && (
+        {cases.length > 0 && (
           <>
             <Row>
               <Col>
@@ -98,7 +102,7 @@ export default function PlaintiffDetails() {
             </Row>
             <Row>
               <Col>
-                <PlaintiffDetailTable data={data?.cases} />
+                <PlaintiffDetailTable data={cases} />
               </Col>
             </Row>
           </>
